@@ -40,7 +40,7 @@ app.get('/todos/:id',(req,res)=>{
   Todo.findById(id)
     .then((todo)=>{
       if (!todo) return res.status(404).send("There is no such Todo in database");
-      res.status(200).send(`Our todo is ${todo}`);
+      res.status(200).send({todo});
     })
     .catch((e)=>res.status(400).send('Error while fetching todo from database'));
 });
