@@ -31,23 +31,18 @@ app.get('/todos',(req,res)=>{
   })
 });
 
-
 app.get('/todos/:id',(req,res)=>{
-
   let id = req.params.id;
-
-  if(!ObjectId.isValid(id)) return res.status(404).send('The id is invalid');
-
-  Todo.findById(id).then((todo)=>{
-    if(!todo) {
-      return res.status(404)
-      .send('There is no todo with such an id in database');
-    }
-    res.send(todo);
-  }, (e) =>{
-    res.status(400).send('There is an error occured in fetching user from db');
-  });
-
+  if(!ObjectId.isValid(id))
+  {
+    return res.status(404).send("The todo ID is invalid");
+  }
+  Todo.findById(id)
+    .then((todo)=>{
+      if (!todo) return res.status(404).send("There is no such Todo in database");
+      res.status(200).send(`Our todo is ${todo}`);
+    })
+    .catch((e)=>res.status(400).send('Error while fetching todo from database'));
 });
 
 app.listen(3000, ()=> {
