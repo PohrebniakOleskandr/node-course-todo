@@ -32,6 +32,26 @@ app.get('/todos',(req,res)=>{
   })
 });
 
+
+
+app.delete('/todos/:id',(req,res)=>{
+
+  let id = req.params.id;
+
+  if(!ObjectId.isValid(id))
+  {
+    return res.status(404).send("The todo ID you are trying to remove is invalid");
+  }
+
+  Todo.findByIdAndRemove(id)
+    .then((todo)=>{
+      if(!todo) return res.status(404).send("The ID of todo you wanted to delete couldn't be found");
+      res.status(200).send(`The todo ${todo}\nHas been deleted.`);
+    })
+    .catch((e) => {res.status(400).send('Error while deleting todo from database')});
+});
+
+
 app.get('/todos/:id',(req,res)=>{
   let id = req.params.id;
   if(!ObjectId.isValid(id))
