@@ -46,7 +46,7 @@ app.delete('/todos/:id',(req,res)=>{
   Todo.findByIdAndRemove(id)
     .then((todo)=>{
       if(!todo) return res.status(404).send("The ID of todo you wanted to delete couldn't be found");
-      res.status(200).send(`The todo ${todo}\nHas been deleted.`);
+      res.status(200).send({todo});
     })
     .catch((e) => {res.status(400).send('Error while deleting todo from database')});
 });
