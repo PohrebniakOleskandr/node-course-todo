@@ -9,7 +9,7 @@ const {ObjectId} = require('mongodb');
 const mongoose = require('./db/mongoose.js');
 const {User} = require('./models/user.js');
 const {Todo} = require('./models/todo.js');
-const {authenticate} =
+const {authenticate} = require('./middleware/middleware.js'); //server\middleware\middleware.js
 
 const port = process.env.PORT;
 const app = express();

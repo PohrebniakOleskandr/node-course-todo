@@ -79,7 +79,6 @@ UserSchema.pre('save',function(next){
     let notDecodedPassword = user.password;
     bcrypt.genSalt(10, (err, salt)=>{
       bcrypt.hash(notDecodedPassword,salt,(err,hash)=>{
-        console.log('по рюмашке?');
         user.password = hash;
         next();
       })
