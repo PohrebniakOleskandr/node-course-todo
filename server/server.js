@@ -10,6 +10,7 @@ const mongoose = require('./db/mongoose.js');
 const {User} = require('./models/user.js');
 const {Todo} = require('./models/todo.js');
 const {authenticate} = require('./middleware/middleware.js'); //server\middleware\middleware.js
+const bcrypt = require('bcryptjs');
 
 const port = process.env.PORT;
 const app = express();
@@ -118,6 +119,23 @@ app.post('/users',(req,res)=>{
 
 });
 
+
+app.post('/users/login',(req,res)=>{
+
+  let userBody = _.pick(req.body, ['email','password']);
+  let {email,password} = userBody;
+
+  User
+  .findByCredentionals(email,password)
+  .then(user => {
+    return user.generateAuthToken().then((token)=>{
+      res.status(200).header('x-auth',token).send('You have success log in...');
+    });
+  })
+  .catch((e) => {
+    res.status(400).send();
+  });
+});
 
 app.get('/users/me', authenticate,(req,res)=>{
   res.send(req.user);
