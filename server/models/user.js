@@ -80,15 +80,12 @@ UserSchema.statics.findByCredentionals = function(email,password) {
   return User
   .findOne({email})
   .then(user => {
-
-      if(!user) Promise.reject();
-
-      return bcrypt
-      .compare(password,user.password)
-      .then((res) => {
-        if (res) return user;
-        else return Promise.reject();
-      });
+      if(!user) return Promise.reject();
+      return bcrypt.compare(password,user.password)
+            .then((res) => {
+              if (res) return user;
+              else return Promise.reject();
+            });
    });
 }
 

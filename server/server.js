@@ -128,9 +128,11 @@ app.post('/users/login',(req,res)=>{
   User
   .findByCredentionals(email,password)
   .then(user => {
-    return user.generateAuthToken().then((token)=>{
-      res.status(200).header('x-auth',token).send('You have success log in...');
-    });
+     return user.generateAuthToken()
+          .then((token)=>{
+            /*return Promise.reject();*/
+            res.status(200).header('x-auth',token).send('You have success log in...');
+          });
   })
   .catch((e) => {
     res.status(400).send();
