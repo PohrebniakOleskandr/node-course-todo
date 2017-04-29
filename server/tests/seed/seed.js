@@ -20,19 +20,25 @@ let users = [
   {
     _id: userTwoId,
     email: 'tooltip@pizdecnax.ui',
-    password: '654321'
+    password: '654321',
+    tokens: [{
+      access: 'auth',
+      token: jwt.sign({_id:userTwoId.toHexString(),access:'auth'},'secret123').toString()
+    }]
   }
 ];
 
 
 let todos = [{
   _id: new ObjectId(),
-  text: 'First thing to do'
+  text: 'First thing to do',
+  _creator: userOneId
 }, {
   _id: new ObjectId(),
   text: 'Second thing to do',
   completed: true,
-  completedAt: 1111
+  completedAt: 1111,
+  _creator: userTwoId
 }];
 
 const populateTodos = (done) => {
